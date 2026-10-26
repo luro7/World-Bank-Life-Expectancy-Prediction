@@ -94,7 +94,7 @@ For a **hypothetical country** with GDP per capita of **$15,000**, health expend
 
 | File | Purpose |
 |---|---|
-| `World_Bank_Life_Expectancy_Prediction.ipynb` | Original executed Jupyter notebook provided by the project author, including analysis, model evaluation, plots, and prediction. The notebook can also download the data from the World Bank API. |
+| `World_Bank_Life_Expectancy_Prediction.ipynb` | Original executed Jupyter notebook provided by the project author, including analysis, model evaluation, plots, and prediction. The notebook's original data-loading cell downloads the dataset from the live World Bank API. |
 | `World_Bank_Life_Expectancy.csv` | Original analyzed dataset, included in this repository to reproduce the reported metrics. The notebook may also retrieve refreshed values from the World Bank API. |
 | `README.md` | Project motivation, methods, key findings, limitations, and acknowledgments. |
 | `blog_post.md` | Nontechnical summary for publication (e.g., GitHub Pages or adaptation to Medium). |
@@ -108,8 +108,12 @@ For a **hypothetical country** with GDP per capita of **$15,000**, health expend
 1. Clone the repository and create a Python environment.
 2. Install dependencies: `pip install -r requirements.txt`.
 3. Open `World_Bank_Life_Expectancy_Prediction.ipynb` in Jupyter.
-4. Execute cells in order. Use the included `World_Bank_Life_Expectancy.csv` to reproduce the reported numbers. The original notebook also has a download cell that accesses the World Bank API, which could yield revised values if re-run.
+4. The original notebook's second code cell downloads live World Bank data and overwrites the CSV. To reproduce the archived dataset results, replace that cell with `df = pd.read_csv("World_Bank_Life_Expectancy.csv")`, then execute subsequent cells in order. Running the original download cell unchanged may produce different numbers if the World Bank revises data.
 5. To publish the blog via GitHub Pages, select **Settings → Pages → Deploy from a branch → main → /docs** and save (if Pages is supported for your repository).
+
+## Public-facing article
+
+Read the [nontechnical blog post](blog_post.md), or enable GitHub Pages from the `/docs` folder to publish the [blog article](docs/index.md) as a website.
 
 ## Acknowledgments
 
