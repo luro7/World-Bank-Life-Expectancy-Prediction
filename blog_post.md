@@ -1,77 +1,70 @@
 # Can a Country's Economy Predict How Long People Live?
 
-*What data from 217 countries reveal about life expectancy—and what a machine-learning model can (and cannot) tell us.*
+*Four questions, 217 countries and economies, and one machine-learning experiment using 2010–2022 World Bank data.*
 
-![Comparing errors from three approaches to predicting life expectancy](model_comparison.svg)
+![Comparing the average prediction errors of three approaches to life expectancy](model_comparison.svg)
 
-What helps explain why people in some countries live longer than in others? Wealth and access to essential services are obvious candidates, but the data offer a useful way to compare their relationships with life expectancy.
+Why do some places have longer life expectancies than others? Economic conditions and public services may be part of the picture. To explore the evidence, I examined **2,821 country-year observations** across **217 countries and economies** from **2010 to 2022**.
 
-I explored **2,821 observations from 217 countries and economies**, covering **2010 to 2022**, using data from the [World Bank](https://data.worldbank.org/). The goal was simple: look for patterns between life expectancy and four indicators, then see whether those patterns could help predict life expectancy in later years.
+The analysis considers four indicators—income per person, healthcare spending relative to GDP, access to electricity, and unemployment—and tests whether they can help estimate life expectancy in later years.
 
-## Which factors are most closely associated with life expectancy?
+## Question 1: Are richer countries associated with longer life expectancy?
 
-Among the four indicators I examined, **access to electricity** had the strongest positive statistical relationship with life expectancy. **GDP per capita** came next.
+**Yes, there is a positive relationship in these data.** The correlation between GDP per capita and life expectancy was **+0.601**.
+
+That does not mean an extra dollar of GDP causes longer lives. Wealthier places may differ in many other ways, including public infrastructure, education, and access to healthcare. GDP per capita also varies widely across countries: its median in this dataset was approximately **$6,730**, compared with a mean of approximately **$18,445**.
+
+## Question 2: Is higher healthcare spending associated with longer lives?
+
+**Somewhat, but less strongly than income.** Healthcare expenditure, measured as a **percentage of GDP**, had a correlation of **+0.260** with life expectancy.
+
+This measure captures the share of national output devoted to healthcare—not spending per patient, accessibility, or the quality of services. The weaker relationship is not evidence that healthcare is unimportant.
+
+## Question 3: How do electricity access and unemployment compare?
+
+**Access to electricity showed the strongest positive correlation**, at **+0.782**. The unemployment rate had a correlation of **-0.034**, effectively showing little linear relationship in these observations.
 
 | Indicator | Correlation with life expectancy |
 |---|---:|
-| Access to electricity | +0.782 |
+| Access to electricity | **+0.782** |
 | GDP per capita | +0.601 |
 | Healthcare spending (% of GDP) | +0.260 |
-| Unemployment rate | -0.034 |
+| Unemployment | -0.034 |
 
-Correlations range from -1 to +1. Positive values mean the two measures tend to increase together; a value close to zero means little *linear* relationship was observed.
+Reliable power supports everyday services, including medical facilities, but the data cannot tell us whether electricity *caused* the observed difference. Other development factors are intertwined.
 
-Electricity access is linked to many practical aspects of daily life—from reliable lighting to the operation of hospitals and clinics. Yet **these numbers do not prove that expanding electricity access by itself causes life expectancy to rise**. Many aspects of development are intertwined.
+## Question 4: Can machine learning estimate life expectancy in later years?
 
-Healthcare spending showed a weaker relationship than I initially expected. One possible reason is that *spending as a percentage of GDP* is not the same thing as spending per person—or as healthcare quality and accessibility.
+**Yes, within the test period, a random forest model performed better than two simpler alternatives.** Models were trained on observations from **2010–2019** and evaluated on **2020–2022**.
 
-## Can a machine predict life expectancy?
+| Model | Average absolute error | R² |
+|---|---:|---:|
+| Baseline (predicting the average) | 6.17 years | -0.004 |
+| Linear regression | 3.32 years | 0.664 |
+| **Random forest** | **2.33 years** | **0.797** |
 
-To explore this question, I compared three approaches: a simple baseline that predicts the average, a linear regression model, and a random forest model. They learned from observations from **2010–2019** and were evaluated on **2020–2022**.
+The random forest's average error was approximately **29.9% lower** than that of linear regression. Its R² of **0.797** indicates that it captured roughly **79.7% of the variation** in the held-out observations.
 
-The most intuitive score is **mean absolute error (MAE)**: how many years away, on average, the predictions are from the recorded values.
+The average error hides some substantial individual misses. These results also describe later observations of countries already represented in training, not entirely new countries.
 
-| Approach | Average prediction error |
-|---|---:|
-| Simple average | 6.17 years |
-| Linear regression | 3.32 years |
-| **Random forest** | **2.33 years** |
+### A new prediction scenario
 
-The random forest model performed best, with about **30% lower average error** than linear regression. It also achieved an **R² of 0.797** on the test data, indicating that it accounted for roughly **80% of the variation** in those recorded outcomes.
+Imagine a hypothetical country with a GDP per person of **$15,000**, healthcare expenditure equal to **7% of GDP**, **100% electricity access**, and **6% unemployment**.
 
-This is encouraging, but it doesn't mean every prediction is accurate to within two years. Averages can hide some very large individual errors.
+The fitted random forest estimated **76.77 years** of life expectancy. This is an illustration of the model's output, not a forecast for any actual country or proof that changing an indicator changes life expectancy.
 
-## What would the model predict for a hypothetical country?
+## Why the quality of the data matters
 
-Imagine a country with:
+An exploratory rule flagged **10 country-year observations** showing life expectancy changes greater than 10 years compared with the previous year. One notably unusual value was **18.818 years for the Central African Republic in 2022**, which produced the largest model error, approximately **36.35 years**. The World Bank-sourced [FRED series](https://fred.stlouisfed.org/series/SPDYNLE00INCAF) contains that value, but the cross-source discrepancy requires caution rather than automatic deletion.
 
-- **$15,000** GDP per person
-- Healthcare spending equal to **7% of GDP**
-- **100%** access to electricity
-- **6%** unemployment
+Three flagged cases occurred in the **651-row test set**. When those three were excluded *only for a sensitivity calculation*, the MAE changed from **2.328 to 2.252 years** and R² from **0.797 to 0.818**. Because the review rule relied on observed outcomes, the adjusted figures are **diagnostic only**; they are not a second independent accuracy estimate.
 
-For this imaginary scenario, the random forest predicted **76.77 years** of life expectancy.
+## Takeaway
 
-That result is a demonstration of what the model has learned from historical patterns—not a prediction for a real country or evidence that changing any single input would directly change how long people live.
+The data show stronger associations for **electricity access and income per person** than for the other two indicators studied. A random forest can make useful numerical estimates on later-year observations, but model scores must always be interpreted alongside data quality and the limits of observational information.
 
-## An important warning in the data
-
-The analysis surfaced **10 observations** with unusually large changes in reported life expectancy between consecutive years. For instance, the World Bank–sourced series records **18.818 years for the Central African Republic in 2022**, far below adjacent years and substantially different from estimates published by other health-data providers. That case was also the model's largest error: approximately **36.35 years**. These records deserve further investigation, not automatic deletion. [World Bank series via FRED](https://fred.stlouisfed.org/series/SPDYNLE00INCAF) · [WHO country profile](https://www.who.int/data/gho/data/countries/country-details/GHO/central-african-republic?countryProfileId=134de201-66b)
-
-### Does one unusual record change the overall result?
-
-I checked how sensitive the evaluation was to unusually large year-to-year changes in reported life expectancy. **Three of the 651 test observations** met the review rule. When I calculated the scores on the remaining 648, the average error shifted from **2.33 to 2.25 years**, and R² rose from **0.797 to 0.818**. This was a diagnostic check using the recorded outcomes, **not** a new independent accuracy test. The original 651-observation results remain the headline numbers.
-
-## What did I learn?
-
-Three findings stood out:
-
-1. **Electricity access and GDP per capita** had the clearest positive relationships with life expectancy among the indicators tested.
-2. A **random forest model** could estimate recorded life expectancy considerably more accurately than a simple average or a linear regression in the later-year test data.
-3. **Data quality and context matter.** Large discrepancies, possible revisions, and differences between statistical sources can change how trustworthy an apparently strong model really is.
-
-The broader lesson is that machine learning can reveal informative patterns, but understanding *what the data mean* is just as important as obtaining a strong model score.
+Machine learning can help us recognize patterns. It cannot, on its own, prove what causes people to live longer.
 
 ---
 
-*Data source: World Bank World Development Indicators, 2010–2022. All numerical results above come from this project's analysis. Observational correlations and model feature importance should not be interpreted as causal findings.*
+*Source: [World Bank World Development Indicators](https://data.worldbank.org/), 2010–2022. The figures come from the archived analysis dataset in this project's [public GitHub repository](README.md). All comparisons describe associations, not causal effects.*
