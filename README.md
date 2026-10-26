@@ -97,8 +97,10 @@ For a **hypothetical country** with GDP per capita of **$15,000**, health expend
 | `World_Bank_Life_Expectancy_Prediction.ipynb` | **Reviewed main notebook**: PEP8-compliant code, documented helper functions, CRISP-DM sections, answers to four questions, models, charts and scenario prediction. Reads the included CSV without an internet connection. |
 | `World_Bank_Life_Expectancy.csv` | Frozen original 2,821-row analysis dataset for reproducible results. |
 | `README.md` | Project overview, setup, methods, findings, limitations, and acknowledgments. |
-| `blog_post.md` | **Public GitHub blog article** explaining four business questions, evidence, and conclusions without code. |
-| `model_comparison.svg` | Visualization of mean absolute error for three regression models. |
+| `blog_post.md` | Editable Markdown source of the nontechnical blog article; includes a featured image and four question-specific visualizations. |
+| `model_comparison.svg` | Model comparison chart for repository documentation. |
+| `docs/index.html` | Standalone, styled, publication-ready blog article for GitHub Pages. |
+| `docs/images/*.svg` | Five original data-grounded images for the hosted article: cover plus one visual for each research question. |
 | `requirements.txt` | Required Python libraries. |
 | `archive/Original_World_Bank_Life_Expectancy_Prediction.ipynb` | Backup of the author's original executed notebook, preserved before readability and reproducibility improvements. |
 
@@ -110,9 +112,15 @@ For a **hypothetical country** with GDP per capita of **$15,000**, health expend
 4. Choose **Kernel → Restart & Run All**. The main notebook loads the committed CSV locally; it does not require live World Bank API access.
 5. Check the model comparison and illustrative prediction against the documented metrics. Results were also independently recomputed against the archived CSV during the project review.
 
-## Blog article
+## Published blog post (Udacity requirement)
 
-The public [blog post on GitHub](blog_post.md) provides the required stakeholder-oriented article, with a title, visual, four clearly answered questions, results and limitations. **No separate website or GitHub Pages configuration is required for this GitHub Markdown publication.**
+Udacity reviewers require a **separately hosted blog article**, not merely a Markdown file viewed inside a GitHub code repository. The old `blog_post.md` URL alone **does not meet this requirement**.
+
+This repository includes a standalone, illustrated article at [`docs/index.html`](docs/index.html) with an image directly after its title, four questions, original visuals, conclusions, and source links.
+
+**To publish:** In GitHub, open **Settings → Pages → Build and deployment → Source: Deploy from a branch**, choose **`main`** and **`/docs`**, then click **Save**. Once the site is deployed and publicly accessible, provide the live hosted article URL as Udacity's second submission link. (The expected site address uses the form `https://luro7.github.io/World-Bank-Life-Expectancy-Prediction/`; verify it loads before submitting.)
+
+Markdown source: [`blog_post.md`](blog_post.md). The GitHub source link should **not** replace the independent hosted blog URL in the Udacity submission.
 
 ## Acknowledgments
 
