@@ -33,7 +33,7 @@ Data downloads can change when the World Bank updates its series. The original C
 
 ## Methods
 
-The notebook follows the **CRISP-DM** framework: business understanding, data understanding, data preparation, modeling, evaluation, and a new-scenario prediction.
+The main notebook follows the **CRISP-DM** framework: business understanding, gathering and assessing data, analysis/visualization, cleaning and preparation, modeling, evaluation, and communication through a new-scenario prediction. The categorical country identifiers are excluded from numerical regression rather than encoded.
 
 - Exploratory analysis: descriptive statistics, histograms, and a Pearson correlation matrix.
 - **Chronological split:** 2010–2019 for training (2,170 observations), 2020–2022 for testing (651 observations).
@@ -94,26 +94,25 @@ For a **hypothetical country** with GDP per capita of **$15,000**, health expend
 
 | File | Purpose |
 |---|---|
-| `World_Bank_Life_Expectancy_Prediction.ipynb` | Original executed Jupyter notebook provided by the project author, including analysis, model evaluation, plots, and prediction. The notebook's original data-loading cell downloads the dataset from the live World Bank API. |
-| `World_Bank_Life_Expectancy.csv` | Original analyzed dataset, included in this repository to reproduce the reported metrics. The notebook may also retrieve refreshed values from the World Bank API. |
-| `README.md` | Project motivation, methods, key findings, limitations, and acknowledgments. |
-| `blog_post.md` | Nontechnical summary for publication (e.g., GitHub Pages or adaptation to Medium). |
-| `model_comparison.svg` | Comparison of test-set mean absolute errors. |
-| `docs/index.md` | Public-facing, nontechnical article (ready for GitHub Pages after enabling Pages). |
-| `docs/model_comparison.svg` | Chart used in the blog post. |
-| `requirements.txt` | Python packages needed to run the notebook. |
+| `World_Bank_Life_Expectancy_Prediction.ipynb` | **Reviewed main notebook**: PEP8-compliant code, documented helper functions, CRISP-DM sections, answers to four questions, models, charts and scenario prediction. Reads the included CSV without an internet connection. |
+| `World_Bank_Life_Expectancy.csv` | Frozen original 2,821-row analysis dataset for reproducible results. |
+| `README.md` | Project overview, setup, methods, findings, limitations, and acknowledgments. |
+| `blog_post.md` | **Public GitHub blog article** explaining four business questions, evidence, and conclusions without code. |
+| `model_comparison.svg` | Visualization of mean absolute error for three regression models. |
+| `requirements.txt` | Required Python libraries. |
+| `archive/Original_World_Bank_Life_Expectancy_Prediction.ipynb` | Backup of the author's original executed notebook, preserved before readability and reproducibility improvements. |
 
 ## Running the project
 
-1. Clone the repository and create a Python environment.
+1. Clone or download the repository, keeping the CSV beside the notebook.
 2. Install dependencies: `pip install -r requirements.txt`.
 3. Open `World_Bank_Life_Expectancy_Prediction.ipynb` in Jupyter.
-4. The original notebook's second code cell downloads live World Bank data and overwrites the CSV. To reproduce the archived dataset results, replace that cell with `df = pd.read_csv("World_Bank_Life_Expectancy.csv")`, then execute subsequent cells in order. Running the original download cell unchanged may produce different numbers if the World Bank revises data.
-5. To publish the blog via GitHub Pages, select **Settings → Pages → Deploy from a branch → main → /docs** and save (if Pages is supported for your repository).
+4. Choose **Kernel → Restart & Run All**. The main notebook loads the committed CSV locally; it does not require live World Bank API access.
+5. Check the model comparison and illustrative prediction against the documented metrics. Results were also independently recomputed against the archived CSV during the project review.
 
-## Public-facing article
+## Blog article
 
-Read the [nontechnical blog post](blog_post.md), or enable GitHub Pages from the `/docs` folder to publish the [blog article](docs/index.md) as a website.
+The public [blog post on GitHub](blog_post.md) provides the required stakeholder-oriented article, with a title, visual, four clearly answered questions, results and limitations. **No separate website or GitHub Pages configuration is required for this GitHub Markdown publication.**
 
 ## Acknowledgments
 
