@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Four World Bank data science questions answered with visuals: GDP per capita, healthcare expenditure, electricity access, unemployment and life expectancy prediction.">
+<meta property="og:title" content="Can a Country's Economy Predict How Long People Live?">
+<meta property="og:description" content="Four data-backed answers from 217 countries and economies, plus the limits of machine learning.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://raw.githubusercontent.com/luro7/World-Bank-Life-Expectancy-Prediction/main/docs/images/featured-life-expectancy.svg">
+<title>Can a Country's Economy Predict How Long People Live? | World Bank Data Story</title>
+<style>
+:root{color-scheme:light;--navy:#13334f;--teal:#087e79;--muted:#65788b;--line:#d9e5ed;--paper:#fff;--bg:#f2f6f8}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:#2a394a;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;line-height:1.78;-webkit-font-smoothing:antialiased}
+.masthead{max-width:960px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:26px 24px 14px;gap:15px}
+.brand{color:var(--navy);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.repo{background:#e1f4f0;color:#075f62;text-decoration:none;font-weight:700;font-size:13px;padding:8px 14px;border-radius:999px}
+article{max-width:960px;margin:0 auto 44px;padding:25px 54px 55px;border:1px solid #e2e9ef;background:#fff;border-radius:20px;box-shadow:0 12px 42px rgba(26,69,90,.05)}
+h1{font-size:clamp(34px,5vw,54px);color:#102e49;line-height:1.15;letter-spacing:-.04em;margin:27px 0 28px;font-weight:800}
+h2{font-size:clamp(25px,3vw,32px);line-height:1.25;color:var(--navy);letter-spacing:-.025em;margin:53px 0 24px;font-weight:760;scroll-margin-top:20px}
+h3{font-size:23px;line-height:1.4;color:#173c5b;margin-top:37px}
+p,ul{font-size:17px;margin:17px 0;color:#33475a}p strong{color:#173f56}p:first-of-type{color:#54687b}
+a{color:#007e82;text-decoration-thickness:1px;text-underline-offset:3px}a:hover{text-decoration-thickness:2px}
+figure{margin:20px 0 9px}figure img{width:100%;height:auto;display:block;max-width:100%;border:1px solid var(--line);border-radius:16px;background:#f8fbfc}
+figure.feature-image{margin:0 0 29px}figure.feature-image img{border:0;border-radius:18px;box-shadow:0 14px 26px rgba(7,36,55,.13)}
+figure.chart-image{margin:22px 0 4px}
+.caption{color:#647789!important;font-size:14px!important;line-height:1.6;margin:4px 0 23px!important;font-style:italic}
+.table-overflow{overflow-x:auto;margin:28px 0}table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.55}th{background:#eaf4f5;color:#163b4f;text-align:left}td,th{padding:13px 17px;border-bottom:1px solid #dce5eb}td:last-child,th:last-child{text-align:right;white-space:nowrap}
+li{margin:10px 0}hr.finishing{border:0;border-top:1px solid #d5e3e9;margin:48px 0 24px}
+footer{text-align:center;color:#758899;font-size:13px;padding:0 20px 46px}footer a{color:#357e80}
+@media(max-width:700px){.masthead{padding:18px 18px 10px}article{padding:15px 21px 35px;margin:0 10px 25px;border-radius:12px}.repo{font-size:12px;padding:7px 10px}p,ul{font-size:16px}h2{margin-top:38px}figure{margin-left:-8px;margin-right:-8px}}
+</style></head><body>
+<header class="masthead"><span class="brand">World Bank · Data Story</span><a class="repo" href="https://github.com/luro7/World-Bank-Life-Expectancy-Prediction">View code &amp; dataset</a></header>
+<main><article><h1>Can a Country's Economy Predict How Long People Live?</h1>
+<figure class="feature-image"><img loading="eager" fetchpriority="high" src="images/featured-life-expectancy.svg" alt="Featured illustration of the World Bank life expectancy study: 217 countries, 2,821 country-year observations, and a chart of average recorded life expectancy"></figure>
+<p><em>What 217 countries and economies, four socioeconomic indicators, and three prediction models can tell us—and what they cannot.</em></p>
+<p><strong>October 2026 · Data science project · Estimated reading time: 6 minutes</strong></p>
+<p>Why do people live longer in some countries than others? Could economic conditions or access to basic services provide clues? To explore these questions, I analyzed <strong>2,821 country-year observations from 217 countries and economies</strong> using the <strong>World Bank World Development Indicators</strong> for <strong>2010–2022</strong>.</p>
+<p>The analysis uses four indicators: GDP per capita, healthcare expenditure as a share of GDP, access to electricity, and unemployment. I looked for descriptive patterns before using machine learning to estimate life expectancy in later years.</p>
+<p>The result is a story told through four questions, four graphics, and a candid look at model limitations.</p>
+<h2>1. Do higher incomes coincide with longer lives?</h2>
+<figure class="chart-image"><img loading="lazy" src="images/gdp-life-expectancy.svg" alt="GDP per capita and average life expectancy across income deciles, positive correlation 0.601"></figure>
+<p class="caption"><em>Figure 1. Each point averages life expectancy for a similarly sized group of country-year observations, ordered by GDP per capita. Income uses a logarithmic scale.</em></p>
+<p><strong>Answer: Generally, yes.</strong> GDP per capita showed a <strong>positive Pearson correlation of +0.601</strong> with life expectancy. Higher-income groups tended to have longer life expectancies.</p>
+<p>Income was highly uneven across observations: median GDP per capita was about <strong>$6,730</strong>, compared with an average of about <strong>$18,445</strong>. The income–longevity relationship should not be assumed to be constant at every income level.</p>
+<p>Crucially, this is a relationship in observational data. It does not prove that raising GDP directly causes longer lives.</p>
+<h2>2. Does spending more of GDP on healthcare mean people live longer?</h2>
+<figure class="chart-image"><img loading="lazy" src="images/health-life-expectancy.svg" alt="Healthcare expenditure as a percentage of GDP and average life expectancy by decile, correlation 0.260"></figure>
+<p class="caption"><em>Figure 2. Average life expectancy within deciles of healthcare spending as a percentage of GDP.</em></p>
+<p><strong>Answer: There is a positive association, but it is weaker.</strong> Healthcare spending as a percentage of GDP had a correlation of <strong>+0.260</strong> with life expectancy.</p>
+<p>This variable measures <em>how much of an economy's output is spent on healthcare</em>, not how much is spent per patient, how affordable care is, or how well healthcare systems work. It would be a mistake to conclude from this result that healthcare spending is unimportant.</p>
+<h2>3. Are electricity access and unemployment associated with life expectancy?</h2>
+<figure class="chart-image"><img loading="lazy" src="images/electricity-unemployment.svg" alt="Two charts comparing electricity access and unemployment with average life expectancy: positive correlation 0.782 for electricity, negative 0.034 for unemployment"></figure>
+<p class="caption"><em>Figure 3. Two indicators, two very different descriptive patterns. Points represent average life expectancy in decile groups.</em></p>
+<p><strong>Answer: Electricity access shows a much stronger positive relationship.</strong> Its correlation with life expectancy was <strong>+0.782</strong>, the highest of the four studied indicators. Unemployment showed almost no overall linear association (<strong>−0.034</strong>).</p>
+<div class="table-overflow"><table><thead><tr><th>Socioeconomic indicator</th><th>Pearson correlation with life expectancy</th></tr></thead><tbody><tr><td>Access to electricity (% of population)</td><td><strong>+0.782</strong></td></tr><tr><td>GDP per capita (current US$)</td><td>+0.601</td></tr><tr><td>Healthcare expenditure (% of GDP)</td><td>+0.260</td></tr><tr><td>Unemployment (% of labor force)</td><td>−0.034</td></tr></tbody></table></div>
+<p>Access to reliable power can coincide with better infrastructure, but many national development factors occur together. These results describe correlations; they cannot isolate a causal effect from electricity or unemployment.</p>
+<h2>4. Can machine learning estimate life expectancy in future observations?</h2>
+<figure class="chart-image"><img loading="lazy" src="images/model-errors.svg" alt="Bar chart comparing baseline, linear regression and random forest mean absolute prediction errors of 6.166, 3.321 and 2.328 years"></figure>
+<p class="caption"><em>Figure 4. Error on held-out 2020–2022 observations. Lower is better.</em></p>
+<p><strong>Answer: Yes, for later-year records from countries already represented in the data.</strong> I trained three models on <strong>2010–2019</strong> and evaluated them on <strong>2020–2022</strong> without fitting the models on the test period.</p>
+<div class="table-overflow"><table><thead><tr><th>Model</th><th>Mean absolute error (years)</th><th>R²</th></tr></thead><tbody><tr><td>Mean-only baseline</td><td>6.166</td><td>−0.004</td></tr><tr><td>Linear regression</td><td>3.321</td><td>0.664</td></tr><tr><td><strong>Random forest</strong></td><td><strong>2.328</strong></td><td><strong>0.797</strong></td></tr></tbody></table></div>
+<p>The random forest was the best of these three approaches, reducing average absolute error by about <strong>29.9% compared with linear regression</strong>. Its R² of <strong>0.797</strong> means the predictions captured roughly 79.7% of the variation in this particular test sample.</p>
+<p>The random forest emphasized <strong>electricity access (69.5% of its feature-importance scores)</strong> and <strong>GDP per capita (18.6%)</strong>, but those importance scores are <strong>not measures of causation</strong> or the share of years lived.</p>
+<h3>What happens in a hypothetical scenario?</h3>
+<p>For a hypothetical country with GDP per capita <strong>$15,000</strong>, healthcare spending <strong>7% of GDP</strong>, electricity access <strong>100%</strong>, and unemployment <strong>6%</strong>, the model estimated a life expectancy of <strong>76.77 years</strong>. This is a demonstration of how the model responds to an input scenario—not a prediction that can be guaranteed for a real country.</p>
+<h2>An unexpected data-quality warning</h2>
+<p>Some observations were unusually volatile. An exploratory check found <strong>10 country-year records</strong> with changes above 10 years from the preceding observation in the same country. Among them, a <strong>Central African Republic 2022 observation of 18.818 years</strong> led to the largest model error, around <strong>36.35 years</strong>. The recorded value also appears in the <a href="https://fred.stlouisfed.org/series/SPDYNLE00INCAF" target="_blank" rel="noopener noreferrer">World Bank-sourced FRED series</a>; it deserves additional cross-source review rather than automatic deletion.</p>
+<p>Three of the flagged observations occurred in the 651-row test set. Excluding those <strong>only as a sensitivity analysis</strong> lowered MAE from <strong>2.328 to 2.252</strong> and increased R² from <strong>0.797 to 0.818</strong>. Because the flagging used actual outcomes, the original full-test metrics remain the primary evaluation.</p>
+<h2>What should we take away?</h2>
+<p>The clearest associations in this dataset were with <strong>access to electricity</strong> and <strong>income per person</strong>. Machine learning helped summarize these patterns and predict later records, but important limitations remain:</p>
+<ul><li>Countries appear in both training and test periods; prediction accuracy for completely unseen countries was <strong>not</strong> measured.</li><li>The test period includes 2020–2022, when global health disruptions may have affected outcomes.</li><li>Important factors such as education, conflict, sanitation, and the quality of healthcare were not included in these four predictors.</li><li>Correlation and feature importance cannot establish causal mechanisms.</li></ul>
+<p>The lesson is not that a few indicators explain life expectancy by themselves. It is that transparent analysis can help ask better questions—provided that we communicate uncertainty, data quality, and the limits of prediction.</p>
+<hr class="finishing">
+<p><strong>Data and methods:</strong> <a href="https://data.worldbank.org/" target="_blank" rel="noopener noreferrer">World Bank World Development Indicators</a> · <a href="https://github.com/luro7/World-Bank-Life-Expectancy-Prediction" target="_blank" rel="noopener noreferrer">Complete notebook, reproducible CSV and README on GitHub</a> · 2010–2022 country-year data. All reported correlations are descriptive and observational.</p></article></main>
+<footer>Independent educational analysis · 2010–2022 World Bank data · <a href="https://github.com/luro7/World-Bank-Life-Expectancy-Prediction">Source &amp; reproducibility</a></footer>
+</body></html>
